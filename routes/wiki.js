@@ -41,7 +41,7 @@ router.get('/add', async (req, res, next) => {
 
 router.get('/:slug', async (req, res, next) => {
   const page = await Page.findOne({ where: { slug: req.params.slug } })
-  console.log(page)
+  // console.log(page)
   try {
     const author = await page.getAuthor()
     res.send(wikiPage(page, author))
