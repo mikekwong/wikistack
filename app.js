@@ -7,13 +7,13 @@ const { db } = require('./models/index')
 
 const morgan = require('morgan')
 
-app.use('/wiki', wikiRouter)
 app.use(morgan('dev'))
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: false }))
+app.use('/wiki', wikiRouter)
 
 app.get('/', (req, res) => {
-  res.send(layout())
+  res.redirect('/wiki')
 })
 
 const PORT = 3000
@@ -26,7 +26,7 @@ const init = async () => {
   await db.sync()
   app.listen(PORT, () => {
     console.log('connected to: ', PORT)
-  });
+  })
 }
 
-init();
+init()
