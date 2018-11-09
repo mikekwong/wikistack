@@ -14,11 +14,6 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   // console.log(req.body)
-  const page = new Page({
-    title: req.body.title,
-    content: req.body.content
-  })
-
   try {
     const [user, wasCreated] = await User.findOrCreate({
       where: {
