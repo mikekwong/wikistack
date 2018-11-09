@@ -1,12 +1,13 @@
 const express = require('express')
 const app = express()
-// const routes = require('./routes/routes')
 const layout = require('./views/layout')
-
-const { db } = require('./models')
+const wikiRouter = require('./routes/wiki')
+const userRouter = require('./routes/user')
+const { db } = require('./models/index')
 
 const morgan = require('morgan')
 
+app.use('/wiki', wikiRouter)
 app.use(morgan('dev'))
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: false }))
@@ -21,6 +22,11 @@ db.authenticate().then(() => {
   console.log('connected to the database')
 })
 
-app.listen(PORT, () => {
-  console.log('connected to: ', PORT)
-})
+const init = async () => {
+  await db.sync()
+  app.listen(PORT, () => {
+    console.log('connected to: ', PORT)
+  });
+}
+
+init();
